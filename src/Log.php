@@ -19,7 +19,7 @@ class Log
 
     }
 
-    public function entity($name){
+    public function entity($name = 'Dframe\activityLog\Entity\default'){
     	$this->entity = $name;
     	return $this;
     }
