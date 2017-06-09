@@ -1,0 +1,13 @@
+{
+    "name": "dframe/activitylog",
+    "description": "user, system activity log",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Slawek Kaleta",
+            "email": "slaszka@gmail.com"
+        }
+    ],
+    "require": {}
+}
