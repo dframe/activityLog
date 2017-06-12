@@ -15,11 +15,11 @@ class Log
     	$this->driver = $driver;
     }
 
-    public function typesActivity(array $list){
-
+    public function activityTypes(array $list){
+    	$this->list = $list;
     }
 
-    public function entity($name = 'Dframe\activityLog\Entity\default'){
+    public function entity($name = '\Dframe\activityLog\Entity\default'){
     	$this->entity = $name;
     	return $this;
     }
