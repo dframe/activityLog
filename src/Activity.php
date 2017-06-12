@@ -8,10 +8,10 @@ namespace Dframe\activityLog;
  *
  */
 
-class Log
+class Activity
 {
 	
-    public function __construct($driver = false){
+    public function __construct($driver){
     	$this->driver = $driver;
     }
 
@@ -29,8 +29,5 @@ class Log
     	return $this;
     }
 
-    public function log(string $data){
-    	$this->log = $data;
-    }
 
 }
