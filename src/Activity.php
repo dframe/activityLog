@@ -14,6 +14,12 @@ class Activity
     public function __construct($driver, $loggedId){
     	$this->driver = $driver;
         $this->loggedId = $loggedId;
+
+        $this->dateTimeZone = "UTC"; // UTC, America/New_York itd.
+    }
+
+    public function setTimeZone($dateTimeZone){
+    	$this->dateTimeZone = $dateTimeZone;
     }
 
     public function loggedId($loggedId){
@@ -41,6 +47,7 @@ class Activity
     }
 
     public function push(){
+    	$dateUTC = new \DateTime("now", new \DateTimeZone($this->dateTimeZone));
         $push = $this->driver->push($this->loggedId, $this->on, array('entity' => $this->entityType, 'data' => $this->entity), $this->log);
         if($push['return'] == true)
             return array('return' => true);
