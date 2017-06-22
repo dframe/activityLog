@@ -1,5 +1,5 @@
 <?php
-namespace Entity\activityLog;
+namespace Libs\Extensions\activityLog;
 
 /**
  * Dframe/activityLog

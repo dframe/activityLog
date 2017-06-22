@@ -1,5 +1,5 @@
 <?php
-namespace Entity\activityLog;
+namespace Libs\Extensions\activityLog;
 
 /**
  * Dframe/activityLog
@@ -9,9 +9,17 @@ namespace Entity\activityLog;
  */
 
 class change
-{
+{   
 
-    public function __construct($before, $after){
+    public function interpreter($key){
+        $this->interpreter = array(
+            'users' => array('id', 'firstname', 'lastname')
+        );
+
+        return $this->interpreter[$key];
+    }
+
+    public function build($before, $after){
         
         if(!empty(array_diff_key($before, $after)))
             throw new \Exception("Keys in array MUST be same", 1);
