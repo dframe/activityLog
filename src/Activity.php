@@ -26,9 +26,9 @@ class Activity
         $this->loggedId = $loggedId;
     }
 
-    public function entity($entity){
+    public function entity($entity, $arg){
         $class = new \ReflectionClass($entity);
-        $this->entity = $entity;
+        $this->entity = call_user_func_array(array(new $entity, "build"), $arg);
     	$this->entityType = $class->getName();
     	return $this;
     }
@@ -40,11 +40,16 @@ class Activity
         return $this;
     }
 
-
     public function log(string $log){
     	$this->log = $log;
     	return $this;
     }
+
+    public static function load($e, $file, $path = null){
+        $change = new change();
+        return $change->build($file, $path);
+
+    } 
 
     public function push(){
     	$dateUTC = new \DateTime("now", new \DateTimeZone($this->dateTimeZone));
@@ -55,8 +60,29 @@ class Activity
         return array('return' => false);
     }
 
+    public function logsCount($whereArray){
+        $logsCount = $this->driver->logsCount($whereArray);
+        return $logsCount;
+        
+    }
 
-    public function read(){
+    public function logs($start, $limit, $where, $order, $sort){
+        $logs = $this->driver->logs($start, $limit, $where, $order, $sort);
+
+        foreach ($logs['data'] as $key => $value) {
+ 
+            $explode = explode(".", $value['log_type']);
+            $table = $explode[0];
+            $entity = new $value['log_entity'];
+            $columns = $entity->interpreter($explode[0]);
+
+            $where = array((string)$value['log_type'] => (int)$value['changed_id']);
+
+            $logs['data'][$key]['table'] = $this->driver->readTypes($table, $columns, array($explode['1'] => $value['changed_id']))['data'];
+        }
+
+        
+        return array('return' => true, 'data' => $logs);
         
     }
 
