@@ -1,10 +1,10 @@
 <?php
-namespace Model\activityLog\drivers;
+namespace Model\ActivityLog\Drivers;
 
 /**
 * @author Sławek Kaleta
 */
-class logModel extends \Model\Model implements \Dframe\activityLog\Driver
+class LogModel extends \Model\Model implements \Dframe\ActivityLog\Driver
 {
 	
     public function push($loggedId, $on, $entity, $log){
