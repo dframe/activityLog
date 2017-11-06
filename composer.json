@@ -11,7 +11,7 @@
     ],
 
     "autoload": {
-        "psr-4": { "Dframe\\activityLog\\": "src/" }
+        "psr-4": { "Dframe\\ActivityLog\\": "src/" }
     },
     
     "require": {}
