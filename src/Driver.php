@@ -1,8 +1,9 @@
 <?php
 namespace Dframe\ActivityLog;
 
-interface Driver {
+interface Driver
+{
 
-	public function push($loggedId, $on, $entity, $log);
+    public function push($loggedId, $on, $entity, $log);
 
 }

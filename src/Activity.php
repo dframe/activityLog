@@ -4,69 +4,80 @@ namespace Dframe\ActivityLog;
 /**
  * Dframe/activityLog
  * Copyright (c) Sławomir Kaleta
- * @license https://github.com/dusta/activityLog/blob/master/LICENCE
  *
+ * @license https://github.com/dusta/activityLog/blob/master/LICENCE
  */
 
 class Activity
 {
-	
-    public function __construct($driver, $loggedId){
-    	$this->driver = $driver;
+    
+    public function __construct($driver, $loggedId)
+    {
+        $this->driver = $driver;
         $this->loggedId = $loggedId;
 
         $this->dateTimeZone = "UTC"; // UTC, America/New_York itd.
     }
 
-    public function setTimeZone($dateTimeZone){
-    	$this->dateTimeZone = $dateTimeZone;
+    public function setTimeZone($dateTimeZone)
+    {
+        $this->dateTimeZone = $dateTimeZone;
     }
 
-    public function loggedId($loggedId){
+    public function loggedId($loggedId)
+    {
         $this->loggedId = $loggedId;
     }
 
-    public function entity($entity, $arg){
+    public function entity($entity, $arg)
+    {
         $class = new \ReflectionClass($entity);
         $this->entity = call_user_func_array(array(new $entity, "build"), $arg);
-    	$this->entityType = $class->getName();
-    	return $this;
+        $this->entityType = $class->getName();
+        return $this;
     }
 
-    public function on($type, $id){
+    public function on($type, $id)
+    {
         $this->on = array();
         $this->on['table'] = $type;
         $this->on['id'] = $id;
         return $this;
     }
 
-    public function log(string $log){
-    	$this->log = $log;
-    	return $this;
+    public function log(string $log)
+    {
+        $this->log = $log;
+        return $this;
     }
 
-    public static function load($e, $file, $path = null){
+    public static function load($e, $file, $path = null)
+    {
         $change = new change();
         return $change->build($file, $path);
 
     } 
 
-    public function push(){
-    	$dateUTC = new \DateTime("now", new \DateTimeZone($this->dateTimeZone));
+    public function push()
+    {
+        $dateUTC = new \DateTime("now", new \DateTimeZone($this->dateTimeZone));
         $push = $this->driver->push($this->loggedId, $this->on, array('entity' => $this->entityType, 'data' => $this->entity), $this->log);
-        if($push['return'] == true)
+        if($push['return'] == true) {
             return array('return' => true);
+        }
 
         return array('return' => false);
     }
 
-    public function logsCount($whereArray){
+    public function logsCount($whereArray)
+    {
         $logsCount = $this->driver->logsCount($whereArray);
         return $logsCount;
         
     }
 
-    public function logs($start, $limit, $where, $order, $sort){
+    public function logs($start, $limit, $where, $order, $sort)
+    {
         $logs = $this->driver->logs($start, $limit, $where, $order, $sort);
 
         foreach ($logs['data'] as $key => $value) {
