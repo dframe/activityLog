@@ -1,5 +1,5 @@
 <?php
-namespace Libs\Extensions\activityLog;
+namespace Libs\Extensions\ActivityLog;
 
 /**
  * Dframe/activityLog
@@ -8,7 +8,7 @@ namespace Libs\Extensions\activityLog;
  *
  */
 
-class delete
+class Delete
 {
 
     public function __construct($before){
