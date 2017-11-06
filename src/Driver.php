@@ -1,5 +1,5 @@
 <?php
-namespace Dframe\activityLog;
+namespace Dframe\ActivityLog;
 
 interface Driver {
 
