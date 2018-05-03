@@ -2,6 +2,7 @@
     "name": "dframe/activitylog",
     "description": "user, system activity log",
     "type": "library",
+    "keywords": ["logsystem", "activitylogs", "dframe"],
     "license": "MIT",
     "authors": [
         {
