@@ -11,6 +11,13 @@ namespace Dframe\ActivityLog;
 class Activity
 {
 
+    /** 
+     * @param Object $driver
+     * @param Int $loggedId
+     *
+     * @return object
+     */
+
     public function __construct($driver, $loggedId)
     {
         $this->driver = $driver;
@@ -29,7 +36,7 @@ class Activity
         $this->loggedId = $loggedId;
     }
 
-    public function entity($entity, $arg)
+    public function entity($entity, $arg = null)
     {
         $class = new \ReflectionClass($entity);
         $this->entity = call_user_func_array(array(new $entity, "build"), $arg);
@@ -61,7 +68,7 @@ class Activity
     public function push()
     {
         $dateUTC = new \DateTime("now", new \DateTimeZone($this->dateTimeZone));
-        $push = $this->driver->push($this->loggedId, $this->on, array('entity' => $this->entityType, 'data' => $this->entity), $this->log);
+        $push = $this->driver->push($this->loggedId, $this->on ?? '', array('entity' => $this->entityType, 'data' => $this->entity), $this->log);
         if ($push['return'] == true) {
             return array('return' => true);
         }

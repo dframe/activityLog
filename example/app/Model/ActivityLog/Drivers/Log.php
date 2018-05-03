@@ -16,12 +16,15 @@ class LogModel extends \Model\Model implements \Dframe\ActivityLog\Driver
 
         $data = array(
             'logged_id' => $loggedId,
-            'log_type' => $on['table'],
-            'changed_id' => $on['id'],
             'log_entity' => $entity['entity'],
-            'log_data' => json_encode($entity['data']),
+            'log_data' => json_encode($entity['data'] ?? ''),
             'log_message' => $log
         );
+
+        if (isset($on['table']) AND isset($on['id'])) {
+            $data['log_type'] = $on['table'];
+            $data['changed_id']  = $on['id'];
+        }
 
         $getLastInsertId = $this->baseClass->db->insert('logs', $data)->getLastInsertId();
         return $this->methodResult(true, array('lastInsertId' => $getLastInsertId));
