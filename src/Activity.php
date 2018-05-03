@@ -10,7 +10,7 @@ namespace Dframe\ActivityLog;
 
 class Activity
 {
-    
+
     public function __construct($driver, $loggedId)
     {
         $this->driver = $driver;
@@ -56,13 +56,13 @@ class Activity
         $change = new change();
         return $change->build($file, $path);
 
-    } 
+    }
 
     public function push()
     {
         $dateUTC = new \DateTime("now", new \DateTimeZone($this->dateTimeZone));
         $push = $this->driver->push($this->loggedId, $this->on, array('entity' => $this->entityType, 'data' => $this->entity), $this->log);
-        if($push['return'] == true) {
+        if ($push['return'] == true) {
             return array('return' => true);
         }
 
@@ -73,7 +73,7 @@ class Activity
     {
         $logsCount = $this->driver->logsCount($whereArray);
         return $logsCount;
-        
+
     }
 
     public function logs($start, $limit, $where, $order, $sort)
@@ -81,7 +81,7 @@ class Activity
         $logs = $this->driver->logs($start, $limit, $where, $order, $sort);
 
         foreach ($logs['data'] as $key => $value) {
- 
+
             $explode = explode(".", $value['log_type']);
             $table = $explode[0];
             $entity = new $value['log_entity'];
@@ -92,10 +92,9 @@ class Activity
             $logs['data'][$key]['table'] = $this->driver->readTypes($table, $columns, array($explode['1'] => $value['changed_id']))['data'];
         }
 
-        
-        return array('return' => true, 'data' => $logs);
-        
-    }
 
+        return array('return' => true, 'data' => $logs);
+
+    }
 
 }

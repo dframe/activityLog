@@ -16,5 +16,5 @@ class Delete
         $this->before = array('before' => $before);
         return $this;
     }
-    
+
 }

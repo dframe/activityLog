@@ -2,24 +2,28 @@
 namespace Model\ActivityLog\Drivers;
 
 /**
- * @author Sławek Kaleta
+ * Dframe/activityLog
+ * Copyright (c) Sławomir Kaleta
+ *
+ * @license https://github.com/dusta/activityLog/blob/master/LICENCE
  */
+
 class LogModel extends \Model\Model implements \Dframe\ActivityLog\Driver
 {
-    
+
     public function push($loggedId, $on, $entity, $log)
     {
 
         $data = array(
-        'logged_id' => $loggedId,
-        'log_type' => $on['table'],
-        'changed_id' => $on['id'],
-        'log_entity' => $entity['entity'],
-        'log_data' => json_encode($entity['data']),
-        'log_message' => $log
+            'logged_id' => $loggedId,
+            'log_type' => $on['table'],
+            'changed_id' => $on['id'],
+            'log_entity' => $entity['entity'],
+            'log_data' => json_encode($entity['data']),
+            'log_message' => $log
         );
 
-        $getLastInsertId = $this->baseClass->db->insert('logs', $data)->getLastInsertId();        
+        $getLastInsertId = $this->baseClass->db->insert('logs', $data)->getLastInsertId();
         return $this->methodResult(true, array('lastInsertId' => $getLastInsertId));
 
     }

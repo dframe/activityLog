@@ -11,8 +11,6 @@ namespace Libs\Extensions\ActivityLog;
 class Change
 {
 
-   
-
     public function interpreter($key)
     {
         $this->interpreter = array(
@@ -24,13 +22,13 @@ class Change
 
     public function build($before, $after)
     {
-        
-        if(!empty(array_diff_key($before, $after))) {
+
+        if (!empty(array_diff_key($before, $after))) {
             throw new \Exception("Keys in array MUST be same", 1);
         }
 
         foreach ($after as $key => $value) {
-            if($before[$key] == $value) {
+            if ($before[$key] == $value) {
                 unset($before[$key]);
                 unset($after[$key]);
             }
@@ -39,6 +37,4 @@ class Change
         return $this;
     }
 
-
-    
 }
