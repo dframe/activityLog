@@ -2,7 +2,8 @@
     "name": "dframe/activitylog",
     "description": "user, system activity log",
     "type": "library",
-    "keywords": ["logsystem", "activitylogs", "dframe"],
+    "keywords": ["logsystem", "activitylogs", "dframe", "log"],
+    "homepage": "https://dframeframework.com",
     "license": "MIT",
     "authors": [
         {
