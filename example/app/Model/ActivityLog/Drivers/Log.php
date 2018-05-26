@@ -21,9 +21,9 @@ class LogModel extends \Model\Model implements \Dframe\ActivityLog\Driver
             'log_message' => $log
         );
 
-        if (isset($on['table']) AND isset($on['id'])) {
+        if (isset($on['table']) and isset($on['id'])) {
             $data['log_type'] = $on['table'];
-            $data['changed_id']  = $on['id'];
+            $data['changed_id'] = $on['id'];
         }
 
         $getLastInsertId = $this->baseClass->db->insert('logs', $data)->getLastInsertId();

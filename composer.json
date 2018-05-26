@@ -2,7 +2,13 @@
     "name": "dframe/activitylog",
     "description": "user, system activity log",
     "license": "MIT",
-    "keywords": ["logsystem", "activitylogs", "dframe", "log", "logs"],
+    "keywords": [
+        "logsystem",
+        "activitylogs",
+        "dframe",
+        "log",
+        "logs"
+    ],
     "homepage": "https://dframeframework.com",
     "type": "library",
     "authors": [
@@ -12,7 +18,9 @@
         }
     ],
     "autoload": {
-        "psr-4": { "Dframe\\ActivityLog\\": "src/" }
+        "psr-4": {
+            "Dframe\\ActivityLog\\": "src/"
+        }
     },
     "require": {},
     "scripts": {
@@ -20,5 +28,5 @@
             "@phpunit"
         ],
         "phpunit": "php vendor/bin/phpunit"
-} 
+    }
 }

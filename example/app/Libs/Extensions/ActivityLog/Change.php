@@ -33,7 +33,7 @@ class Change
                 unset($after[$key]);
             }
         }
-        
+
         $this->changes = array('before' => $before, 'after' => $after);
         return $this;
     }
