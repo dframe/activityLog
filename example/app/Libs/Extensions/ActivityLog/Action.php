@@ -10,10 +10,8 @@ namespace Libs\Extensions\ActivityLog;
 
 class Action
 {
-
     public function __construct()
     {
         return $this;
     }
-
 }

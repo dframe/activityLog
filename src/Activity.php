@@ -11,7 +11,7 @@ namespace Dframe\ActivityLog;
 class Activity
 {
 
-    /** 
+    /**
      * @param Object $driver
      * @param Int $loggedId
      *
@@ -39,14 +39,14 @@ class Activity
     public function entity($entity, $arg = null)
     {
         $class = new \ReflectionClass($entity);
-        $this->entity = call_user_func_array(array(new $entity, "build"), $arg);
+        $this->entity = call_user_func_array([new $entity, "build"], $arg);
         $this->entityType = $class->getName();
         return $this;
     }
 
     public function on($type, $id)
     {
-        $this->on = array();
+        $this->on = [];
         $this->on['table'] = $type;
         $this->on['id'] = $id;
         return $this;
@@ -62,25 +62,23 @@ class Activity
     {
         $change = new change();
         return $change->build($file, $path);
-
     }
 
     public function push()
     {
         $dateUTC = new \DateTime("now", new \DateTimeZone($this->dateTimeZone));
-        $push = $this->driver->push($this->loggedId, $this->on ?? '', array('entity' => $this->entityType, 'data' => $this->entity), $this->log);
+        $push = $this->driver->push($this->loggedId, $this->on ?? '', ['entity' => $this->entityType, 'data' => $this->entity], $this->log);
         if ($push['return'] == true) {
-            return array('return' => true);
+            return ['return' => true];
         }
 
-        return array('return' => false);
+        return ['return' => false];
     }
 
     public function logsCount($whereArray)
     {
         $logsCount = $this->driver->logsCount($whereArray);
         return $logsCount;
-
     }
 
     public function logs($start, $limit, $where, $order, $sort)
@@ -88,20 +86,17 @@ class Activity
         $logs = $this->driver->logs($start, $limit, $where, $order, $sort);
 
         foreach ($logs['data'] as $key => $value) {
-
             $explode = explode(".", $value['log_type']);
             $table = $explode[0];
             $entity = new $value['log_entity'];
             $columns = $entity->interpreter($explode[0]);
 
-            $where = array((string)$value['log_type'] => (int)$value['changed_id']);
+            $where = [(string)$value['log_type'] => (int)$value['changed_id']];
 
-            $logs['data'][$key]['table'] = $this->driver->readTypes($table, $columns, array($explode['1'] => $value['changed_id']))['data'];
+            $logs['data'][$key]['table'] = $this->driver->readTypes($table, $columns, [$explode['1'] => $value['changed_id']])['data'];
         }
 
 
-        return array('return' => true, 'data' => $logs);
-
+        return ['return' => true, 'data' => $logs];
     }
-
 }

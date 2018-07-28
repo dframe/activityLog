@@ -10,19 +10,17 @@ namespace Libs\Extensions\ActivityLog;
 
 class Change
 {
-
     public function interpreter($key)
     {
-        $this->interpreter = array(
-            'users' => array('id', 'firstname', 'lastname')
-        );
+        $this->interpreter = [
+            'users' => ['id', 'firstname', 'lastname']
+        ];
 
         return $this->interpreter[$key];
     }
 
     public function build($before, $after)
     {
-
         if (!empty(array_diff_key($before, $after))) {
             throw new \Exception("Keys in array MUST be same", 1);
         }
@@ -34,8 +32,7 @@ class Change
             }
         }
 
-        $this->changes = array('before' => $before, 'after' => $after);
+        $this->changes = ['before' => $before, 'after' => $after];
         return $this;
     }
-
 }
