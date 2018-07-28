@@ -10,16 +10,14 @@ namespace Model\ActivityLog\Drivers;
 
 class LogModel extends \Model\Model implements \Dframe\ActivityLog\Driver
 {
-
     public function push($loggedId, $on, $entity, $log)
     {
-
-        $data = array(
+        $data = [
             'logged_id' => $loggedId,
             'log_entity' => $entity['entity'],
             'log_data' => json_encode($entity['data'] ?? ''),
             'log_message' => $log
-        );
+        ];
 
         if (isset($on['table']) and isset($on['id'])) {
             $data['log_type'] = $on['table'];
@@ -27,37 +25,32 @@ class LogModel extends \Model\Model implements \Dframe\ActivityLog\Driver
         }
 
         $getLastInsertId = $this->baseClass->db->insert('logs', $data)->getLastInsertId();
-        return $this->methodResult(true, array('lastInsertId' => $getLastInsertId));
-
+        return $this->methodResult(true, ['lastInsertId' => $getLastInsertId]);
     }
 
     public function logsCount($whereArray)
     {
-
         $query = $this->baseClass->db->prepareQuery('SELECT count(*) AS count FROM `logs`');
         $query->prepareWhere($whereArray);
         $row = $this->baseClass->db->pdoQuery($query->getQuery(), $query->getParams())->result();
         return $row['count'];
-
     }
 
     public function logs($start, $limit, $whereArray, $order = 'logs.log_id', $sort = 'DESC')
     {
-
         $query = $this->baseClass->db->prepareQuery('SELECT * FROM `logs`');
         $query->prepareWhere($whereArray);
         $query->prepareOrder($order, $sort);
         $query->prepareLimit($limit, $start);
 
         $results = $this->baseClass->db->pdoQuery($query->getQuery(), $query->getParams())->results();
-        return $this->methodResult(true, array('data' => $results));
+        return $this->methodResult(true, ['data' => $results]);
     }
 
 
     public function readTypes($table, $columns, array $where)
     {
         $row = $this->baseClass->db->select($table, $columns, $where)->result();
-        return $this->methodResult(true, array('data' => $row));
+        return $this->methodResult(true, ['data' => $row]);
     }
-
 }

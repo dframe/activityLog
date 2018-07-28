@@ -10,11 +10,9 @@ namespace Libs\Extensions\ActivityLog;
 
 class Delete
 {
-
     public function __construct($before)
     {
-        $this->before = array('before' => $before);
+        $this->before = ['before' => $before];
         return $this;
     }
-
 }
