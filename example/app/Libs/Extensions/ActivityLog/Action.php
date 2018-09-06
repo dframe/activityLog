@@ -1,4 +1,5 @@
 <?php
+
 namespace Libs\Extensions\ActivityLog;
 
 /**
@@ -10,6 +11,9 @@ namespace Libs\Extensions\ActivityLog;
 
 class Action
 {
+    /**
+     * Action constructor.
+     */
     public function __construct()
     {
         return $this;

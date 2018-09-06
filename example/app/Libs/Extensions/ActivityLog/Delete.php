@@ -1,4 +1,5 @@
 <?php
+
 namespace Libs\Extensions\ActivityLog;
 
 /**
@@ -10,6 +11,11 @@ namespace Libs\Extensions\ActivityLog;
 
 class Delete
 {
+    /**
+     * Delete constructor.
+     *
+     * @param $before
+     */
     public function __construct($before)
     {
         $this->before = ['before' => $before];

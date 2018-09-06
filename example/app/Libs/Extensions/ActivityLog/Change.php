@@ -1,4 +1,5 @@
 <?php
+
 namespace Libs\Extensions\ActivityLog;
 
 /**
@@ -10,6 +11,11 @@ namespace Libs\Extensions\ActivityLog;
 
 class Change
 {
+    /**
+     * @param $key
+     *
+     * @return mixed
+     */
     public function interpreter($key)
     {
         $this->interpreter = [
@@ -19,6 +25,13 @@ class Change
         return $this->interpreter[$key];
     }
 
+    /**
+     * @param $before
+     * @param $after
+     *
+     * @return $this
+     * @throws \Exception
+     */
     public function build($before, $after)
     {
         if (!empty(array_diff_key($before, $after))) {

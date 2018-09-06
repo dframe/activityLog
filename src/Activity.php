@@ -1,4 +1,5 @@
 <?php
+
 namespace Dframe\ActivityLog;
 
 /**
@@ -13,11 +14,10 @@ class Activity
 
     /**
      * @param Object $driver
-     * @param Int $loggedId
+     * @param Int    $loggedId
      *
      * @return object
      */
-
     public function __construct($driver, $loggedId)
     {
         $this->driver = $driver;
@@ -26,16 +26,41 @@ class Activity
         $this->dateTimeZone = "UTC"; // UTC, America/New_York itd.
     }
 
+    /**
+     * @param      $e
+     * @param      $file
+     * @param null $path
+     *
+     * @return mixed
+     */
+    public static function load($e, $file, $path = null)
+    {
+        $change = new change();
+        return $change->build($file, $path);
+    }
+
+    /**
+     * @param $dateTimeZone
+     */
     public function setTimeZone($dateTimeZone)
     {
         $this->dateTimeZone = $dateTimeZone;
     }
 
+    /**
+     * @param string $loggedId
+     */
     public function loggedId($loggedId)
     {
         $this->loggedId = $loggedId;
     }
 
+    /**
+     * @param      $entity
+     * @param null $arg
+     *
+     * @return $this
+     */
     public function entity($entity, $arg = null)
     {
         $class = new \ReflectionClass($entity);
@@ -44,6 +69,12 @@ class Activity
         return $this;
     }
 
+    /**
+     * @param $type
+     * @param $id
+     *
+     * @return $this
+     */
     public function on($type, $id)
     {
         $this->on = [];
@@ -52,18 +83,20 @@ class Activity
         return $this;
     }
 
+    /**
+     * @param string $log
+     *
+     * @return $this
+     */
     public function log(string $log)
     {
         $this->log = $log;
         return $this;
     }
 
-    public static function load($e, $file, $path = null)
-    {
-        $change = new change();
-        return $change->build($file, $path);
-    }
-
+    /**
+     * @return array
+     */
     public function push()
     {
         $dateUTC = new \DateTime("now", new \DateTimeZone($this->dateTimeZone));
@@ -75,12 +108,26 @@ class Activity
         return ['return' => false];
     }
 
+    /**
+     * @param $whereArray
+     *
+     * @return mixed
+     */
     public function logsCount($whereArray)
     {
         $logsCount = $this->driver->logsCount($whereArray);
         return $logsCount;
     }
 
+    /**
+     * @param int    $start
+     * @param int    $limit
+     * @param array  $where
+     * @param string $order
+     * @param string $sort
+     *
+     * @return array
+     */
     public function logs($start, $limit, $where, $order, $sort)
     {
         $logs = $this->driver->logs($start, $limit, $where, $order, $sort);
