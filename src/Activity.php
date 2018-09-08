@@ -129,7 +129,7 @@ class Activity
     public function logs($where = [], $order = 'id', $sort = 'DESC', $limit = 30, $start = 0)
     {
         $logs = $this->driver->logs($where, $order, $sort, $limit, $start);
-        if (isset($logs['return']) AND $logs['return'] === true) {
+        if (isset($logs['return']) and $logs['return'] === true) {
             foreach ($logs['data'] as $key => $value) {
                 if (isset($value['log_type'])) {
                     $explode = explode(".", $value['log_type']);
