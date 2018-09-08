@@ -42,10 +42,10 @@ class MysqlLogModel implements \Dframe\ActivityLog\Driver
      *
      * @return mixed
      */
-    public function logsCount($whereArray)
+    public function logsCount($where)
     {
         $query = $this->baseClass->db->prepareQuery('SELECT count(*) AS count FROM `logs`');
-        $query->prepareWhere($whereArray);
+        $query->prepareWhere($where);
         $row = $this->baseClass->db->pdoQuery($query->getQuery(), $query->getParams())->result();
         return $row['count'];
     }
@@ -53,16 +53,16 @@ class MysqlLogModel implements \Dframe\ActivityLog\Driver
     /**
      * @param        $start
      * @param        $limit
-     * @param        $whereArray
+     * @param        $where
      * @param string $order
      * @param string $sort
      *
      * @return mixed
      */
-    public function logs($start, $limit, $whereArray, $order = 'logs.log_id', $sort = 'DESC')
+    public function logs($where = [], $order = 'id', $sort = 'DESC', $limit = 30, $start = 0)
     {
         $query = $this->baseClass->db->prepareQuery('SELECT * FROM `logs`');
-        $query->prepareWhere($whereArray);
+        $query->prepareWhere($where);
         $query->prepareOrder($order, $sort);
         $query->prepareLimit($limit, $start);
 
