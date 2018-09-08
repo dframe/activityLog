@@ -63,7 +63,11 @@ class Activity
     public function entity($entity, $arg = null)
     {
         $class = new \ReflectionClass($entity);
-        $this->entity = call_user_func_array([new $entity, "build"], $arg);
+        if (!is_null($arg)) {
+            $this->entity = call_user_func_array([new $entity, "build"], $arg);
+        } else {
+            $this->entity = new $entity;
+        }
         $this->entityType = $class->getName();
         return $this;
     }
@@ -133,8 +137,9 @@ class Activity
             foreach ($logs['data'] as $key => $value) {
                 if (isset($value['log_type'])) {
                     $explode = explode(".", $value['log_type']);
-                    $table = $explode[0];
+
                     $entity = new $value['log_entity'];
+                    $table = $explode[0];
                     $columns = $entity->interpreter($explode[0]);
 
                     $logs['data'][$key]['table'] = $this->driver->readTypes($table, $columns, [$explode['1'] => $value['changed_id']])['data'];

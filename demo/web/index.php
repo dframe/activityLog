@@ -8,11 +8,12 @@
  */
 
 use Dframe\ActivityLog\Activity;
+use Dframe\ActivityLog\Demo\Drivers\FileLog;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-$log = (new Activity(new \Dframe\ActivityLog\Demo\Drivers\FileLog()));
-$log->log('system')->entity(\Dframe\ActivityLog\Demo\Entity\Action::class, ['Hello Word!'])->push();
+$log = (new Activity(new FileLog()));
+$log->log('Hello Word!')->entity(\Dframe\ActivityLog\Demo\Entity\Action::class)->push();
 
 echo '<pre>';
-var_dump($log->logs(null, null, null, null, null));
+var_dump($log->logs());

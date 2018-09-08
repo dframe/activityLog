@@ -29,7 +29,8 @@
     },
     "require": {
         "php": ">=7.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "psr/log": "^1.0"
     },
     "require-dev": {
         "dframe/database": "^1.4"

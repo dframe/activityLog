@@ -17,9 +17,4 @@ class Action
     {
         return $this;
     }
-
-    public function build($message)
-    {
-        return ['message' => $message];
-    }
 }
