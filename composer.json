@@ -22,7 +22,15 @@
             "Dframe\\ActivityLog\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Dframe\\ActivityLog\\Demo\\": "demo/app/"
+        }
+    },
     "require": {},
+    "require-dev": {
+        "dframe/database": "^1.4"
+    },
     "scripts": {
         "test": [
             "@phpunit"

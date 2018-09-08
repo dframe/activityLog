@@ -1,15 +1,24 @@
 <?php
-namespace Model\ActivityLog\Drivers;
+
+namespace Dframe\ActivityLog\Demo\Drivers;
 
 /**
- * Dframe/activityLog
+ * Dframe/ActivityLog
  * Copyright (c) Sławomir Kaleta
  *
  * @license https://github.com/dusta/activityLog/blob/master/LICENCE
  */
 
-class LogModel extends \Model\Model implements \Dframe\ActivityLog\Driver
+class MysqlLogModel implements \Dframe\ActivityLog\Driver
 {
+    /**
+     * @param string $loggedId
+     * @param string $on
+     * @param object $entity
+     * @param        $log
+     *
+     * @return mixed
+     */
     public function push($loggedId, $on, $entity, $log)
     {
         $data = [
@@ -28,6 +37,11 @@ class LogModel extends \Model\Model implements \Dframe\ActivityLog\Driver
         return $this->methodResult(true, ['lastInsertId' => $getLastInsertId]);
     }
 
+    /**
+     * @param $whereArray
+     *
+     * @return mixed
+     */
     public function logsCount($whereArray)
     {
         $query = $this->baseClass->db->prepareQuery('SELECT count(*) AS count FROM `logs`');
@@ -36,6 +50,15 @@ class LogModel extends \Model\Model implements \Dframe\ActivityLog\Driver
         return $row['count'];
     }
 
+    /**
+     * @param        $start
+     * @param        $limit
+     * @param        $whereArray
+     * @param string $order
+     * @param string $sort
+     *
+     * @return mixed
+     */
     public function logs($start, $limit, $whereArray, $order = 'logs.log_id', $sort = 'DESC')
     {
         $query = $this->baseClass->db->prepareQuery('SELECT * FROM `logs`');
@@ -48,6 +71,13 @@ class LogModel extends \Model\Model implements \Dframe\ActivityLog\Driver
     }
 
 
+    /**
+     * @param       $table
+     * @param       $columns
+     * @param array $where
+     *
+     * @return mixed
+     */
     public function readTypes($table, $columns, array $where)
     {
         $row = $this->baseClass->db->select($table, $columns, $where)->result();

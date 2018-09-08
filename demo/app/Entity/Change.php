@@ -1,14 +1,13 @@
 <?php
 
-namespace Libs\Extensions\ActivityLog;
+namespace Dframe\ActivityLog\Demo\Entity;
 
 /**
- * Dframe/activityLog
+ * Dframe/ActivityLog
  * Copyright (c) Sławomir Kaleta
  *
  * @license https://github.com/dusta/activityLog/blob/master/LICENCE
  */
-
 class Change
 {
     /**
@@ -30,7 +29,6 @@ class Change
      * @param $after
      *
      * @return $this
-     * @throws \Exception
      */
     public function build($before, $after)
     {
