@@ -3,12 +3,11 @@
 namespace Dframe\ActivityLog;
 
 /**
- * Dframe/activityLog
+ * Dframe/ActivityLog
  * Copyright (c) Sławomir Kaleta
  *
  * @license https://github.com/dusta/activityLog/blob/master/LICENCE
  */
-
 class Activity
 {
 
@@ -18,7 +17,7 @@ class Activity
      *
      * @return object
      */
-    public function __construct($driver, $loggedId)
+    public function __construct($driver, $loggedId = null)
     {
         $this->driver = $driver;
         $this->loggedId = $loggedId;
@@ -99,7 +98,6 @@ class Activity
      */
     public function push()
     {
-        $dateUTC = new \DateTime("now", new \DateTimeZone($this->dateTimeZone));
         $push = $this->driver->push($this->loggedId, $this->on ?? '', ['entity' => $this->entityType, 'data' => $this->entity], $this->log);
         if ($push['return'] == true) {
             return ['return' => true];
@@ -120,30 +118,33 @@ class Activity
     }
 
     /**
-     * @param int    $start
-     * @param int    $limit
      * @param array  $where
      * @param string $order
      * @param string $sort
+     * @param int    $limit
+     * @param int    $start
      *
      * @return array
      */
-    public function logs($start, $limit, $where, $order, $sort)
+    public function logs($where = [], $order = 'id', $sort = 'DESC', $limit = 30, $start = 0)
     {
-        $logs = $this->driver->logs($start, $limit, $where, $order, $sort);
+        $logs = $this->driver->logs($where, $order, $sort, $limit, $start);
+        if (isset($logs['return']) AND $logs['return'] === true) {
+            foreach ($logs['data'] as $key => $value) {
+                if (isset($value['log_type'])) {
+                    $explode = explode(".", $value['log_type']);
+                    $table = $explode[0];
+                    $entity = new $value['log_entity'];
+                    $columns = $entity->interpreter($explode[0]);
 
-        foreach ($logs['data'] as $key => $value) {
-            $explode = explode(".", $value['log_type']);
-            $table = $explode[0];
-            $entity = new $value['log_entity'];
-            $columns = $entity->interpreter($explode[0]);
+                    $logs['data'][$key]['table'] = $this->driver->readTypes($table, $columns, [$explode['1'] => $value['changed_id']])['data'];
+                }
+            }
 
-            $where = [(string)$value['log_type'] => (int)$value['changed_id']];
 
-            $logs['data'][$key]['table'] = $this->driver->readTypes($table, $columns, [$explode['1'] => $value['changed_id']])['data'];
+            return ['return' => true, 'data' => $logs];
         }
 
-
-        return ['return' => true, 'data' => $logs];
+        return ['return' => false];
     }
 }

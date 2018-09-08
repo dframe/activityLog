@@ -27,7 +27,10 @@
             "Dframe\\ActivityLog\\Demo\\": "demo/app/"
         }
     },
-    "require": {},
+    "require": {
+        "php": ">=7.0",
+        "ext-json": "*"
+    },
     "require-dev": {
         "dframe/database": "^1.4"
     },

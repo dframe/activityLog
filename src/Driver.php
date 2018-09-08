@@ -2,6 +2,12 @@
 
 namespace Dframe\ActivityLog;
 
+/**
+ * Interface Driver
+ * Copyright (c) Sławomir Kaleta
+ *
+ * @license https://github.com/dusta/activityLog/blob/master/LICENCE
+ */
 interface Driver
 {
     /**
