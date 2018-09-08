@@ -22,7 +22,6 @@ class Psr3Adapter extends \Psr\Log\AbstractLogger implements \Psr\Log\LoggerInte
         $this->log = $log;
         $this->communique = $communique;
         $this->entity = $entity;
-
     }
 
     /**
@@ -34,16 +33,12 @@ class Psr3Adapter extends \Psr\Log\AbstractLogger implements \Psr\Log\LoggerInte
      *
      * @return void
      */
-    function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = [])
     {
-
         $this->log->log($this->communique)->entity($this->entity, [
             'level' => $level,
             'message' => $message,
             'context' => $context
         ])->push();
-
     }
-
-
 }

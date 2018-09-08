@@ -25,7 +25,6 @@ class PSR3
             'message' => $this->interpolate($message, $context),
             'context' => $context
         ];
-
     }
 
     public function interpolate($message, array $context = [])
