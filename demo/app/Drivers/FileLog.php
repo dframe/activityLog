@@ -55,13 +55,13 @@ class FileLog implements \Dframe\ActivityLog\Driver
     /**
      * @param        $start
      * @param        $limit
-     * @param        $whereArray
+     * @param        $where
      * @param string $order
      * @param string $sort
      *
      * @return mixed
      */
-    public function logs($start, $limit, $where, $order, $sort)
+    public function logs()
     {
         if (!file_exists(self::FILE_DB)) {
             return false;
