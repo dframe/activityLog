@@ -2,7 +2,6 @@
 
 namespace Dframe\ActivityLog\Demo\Drivers;
 
-
 define('APP_DIR', __DIR__ . '/../');
 
 /**
@@ -17,7 +16,6 @@ class FileLog implements \Dframe\ActivityLog\Driver
 
     public function push($loggedId, $on, $entity, $log)
     {
-
         $data = [];
         $data['loggedId'] = '1';
         $data['on'] = $on;
@@ -30,7 +28,6 @@ class FileLog implements \Dframe\ActivityLog\Driver
         }
 
         if (filesize(self::FILE_DB) > 0) {
-
             $contents = null;
             while (!feof($fp)) {
                 $contents .= fread($fp, 8192);
@@ -44,11 +41,8 @@ class FileLog implements \Dframe\ActivityLog\Driver
 
             $fp = fopen(self::FILE_DB, 'w+');
             $result = fwrite($fp, json_encode($jsondecode));
-
         } else {
-
             $result = fwrite($fp, json_encode($data));
-
         }
 
         flock($fp, LOCK_UN);
@@ -85,5 +79,4 @@ class FileLog implements \Dframe\ActivityLog\Driver
         $data = json_decode($contents, true);
         return ['return' => true, 'data' => $data];
     }
-
 }
