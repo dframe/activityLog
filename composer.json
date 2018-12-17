@@ -7,7 +7,8 @@
         "activitylogs",
         "dframe",
         "log",
-        "logs"
+        "logs",
+        "psr-3"
     ],
     "homepage": "https://dframeframework.com",
     "type": "library",
